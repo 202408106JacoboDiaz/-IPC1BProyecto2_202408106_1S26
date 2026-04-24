@@ -2,6 +2,8 @@ package controller;
 
 import model.*;
 import util.Bitacora;
+import threads.MonitorSesiones;
+import threads.SimuladorInscripciones;
 
 public class AuthController {
 

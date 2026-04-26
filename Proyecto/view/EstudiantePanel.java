@@ -34,6 +34,7 @@ public class EstudiantePanel extends JFrame {
         tabs.addTab("Cursos Disponibles", crearPanelCursosDisponibles());
         tabs.addTab("Mis Cursos", crearPanelMisCursos());
         tabs.addTab("Calificaciones", crearPanelCalificaciones());
+        tabs.addTab("Reportes", crearPanelReportes());
         tabs.addTab("Mi Perfil", crearPanelPerfil());
         tabs.addTab("Monitor", crearPanelMonitor());
 
@@ -333,6 +334,101 @@ public class EstudiantePanel extends JFrame {
 
     private void detenerThreads() {
         monitorSesiones.detener(); simInscripciones.detener(); genEstadisticas.detener();
+    }
+
+    //Panel reportes
+    private JPanel crearPanelReportes() {
+        JPanel pnl = new JPanel(new BorderLayout(5, 5));
+        pnl.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        //Informacion del estudiante
+        JPanel pnlInfo = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlInfo.add(new JLabel("Estudiante: " + estudiante.getNomb() + " | Codigo: "
+                + estudiante.getCod()));
+        pnlInfo.setBorder(BorderFactory.createTitledBorder("Mi informacion"));
+
+        //Parametro seccion
+        JPanel pnlForm = new JPanel(new GridLayout(2, 2, 5, 5));
+        JTextField txtCodSec = new JTextField(); pnlForm.add(new JLabel("Cod Seccion (para reporte):"));
+        pnlForm.add(txtCodSec); pnlForm.setBorder(BorderFactory.createTitledBorder("Parametros"));
+
+        //BTNs PDF
+        JPanel pnlPDF = new JPanel(new GridLayout(2, 1, 5, 5));
+        pnlPDF.setBorder(BorderFactory.createTitledBorder("Reportes PDF"));
+        JButton btnHistorial = new JButton("Mi Historial Academico (PDF)");
+        JButton btnCalSec = new JButton("Mis Calificaciones por Seccion (PDF)");
+        pnlPDF.add(btnHistorial);
+        pnlPDF.add(btnCalSec);
+
+        //BTNs CSV
+        JPanel pnlCSV = new JPanel(new GridLayout(2, 1, 5, 5));
+        pnlCSV.setBorder(BorderFactory.createTitledBorder("Exportar CSV"));
+        JButton btnCsvHistorial = new JButton("Exportar Historial (CSV)");
+        JButton btnCsvNotas = new JButton("Exportar Notas por Seccion (CSV)");
+        pnlCSV.add(btnCsvHistorial); pnlCSV.add(btnCsvNotas);
+
+        //Mensaje
+        JLabel lblMsg = new JLabel("", SwingConstants.CENTER);
+        lblMsg.setFont(new Font("Arial", Font.BOLD, 12));
+
+        //Layout
+        JPanel pnlNorte = new JPanel(new GridLayout(2, 1, 5, 5));
+        pnlNorte.add(pnlInfo);
+        pnlNorte.add(pnlForm);
+
+        JPanel pnlCentro = new JPanel(new GridLayout(1, 2, 10, 0));
+        pnlCentro.add(pnlPDF); pnlCentro.add(pnlCSV);
+
+        pnl.add(pnlNorte, BorderLayout.NORTH); pnl.add(pnlCentro, BorderLayout.CENTER);
+        pnl.add(lblMsg, BorderLayout.SOUTH);
+
+        //Acciones PDF
+        btnHistorial.addActionListener(e -> {
+            String res = util.ReportePDF.reporteIndividualEstudiante(estudiante.getCod());
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCalSec.addActionListener(e -> {
+            String cod = txtCodSec.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de seccion");
+                return;
+            }
+            //Validar inscripcion del estudiante
+            Seccion sec = DataStore.buscarSeccion(cod);
+            if (sec == null || !sec.estaInscrito(estudiante.getCod())) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: No esta inscrito en esta seccion");
+                return;
+            }
+            String res = util.ReportePDF.reporteCalificacionesSeccion(cod, estudiante.getCod());
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        //Acciones CSV
+        btnCsvHistorial.addActionListener(e -> {
+            String res = util.ExportadorCSV.exportarHistorialEstudiante(estudiante.getCod());
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCsvNotas.addActionListener(e -> {
+            String cod = txtCodSec.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de seccion");
+                return;
+            }
+            Seccion sec = DataStore.buscarSeccion(cod);
+            if (sec == null || !sec.estaInscrito(estudiante.getCod())) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: No esta inscrito en esa seccion");
+                return;
+            }
+            String res = util.ExportadorCSV.exportarNotasSeccion(cod, estudiante.getCod());
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+        return pnl;
     }
 
     //Cerrar sesion

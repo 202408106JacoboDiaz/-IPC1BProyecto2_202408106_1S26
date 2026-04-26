@@ -48,6 +48,7 @@ public class AdminPanel extends JFrame {
         tabs.addTab("Cursos", crearPanelCursos());
         tabs.addTab("Secciones", crearPanelSecciones());
         tabs.addTab("Bitacora", crearPanelBitacora());
+        tabs.addTab("Reportes", crearPanelReportes());
         tabs.addTab("Monitor", crearPanelMonitor());
 
         //Btn cerrar sesion
@@ -578,6 +579,141 @@ public class AdminPanel extends JFrame {
         pnl.add(new JLabel("Monitor de procesos en tiempo real:"), BorderLayout.NORTH);
         pnl.add(scroll, BorderLayout.CENTER);
         pnl.add(btnLimpiar, BorderLayout.SOUTH);
+        return pnl;
+    }
+
+    //Panel de reportes PDF
+    private JPanel crearPanelReportes() {
+        JPanel pnl = new JPanel(new BorderLayout(5, 5));
+        pnl.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        //Formulario de parametros
+        JPanel pnlForm = new JPanel(new GridLayout(4, 2, 5, 5));
+        JTextField txtCodSec  = new JTextField(); JTextField txtCodCurso = new JTextField();
+        JTextField txtCodEst  = new JTextField();
+
+        pnlForm.add(new JLabel("Cod Seccion:")); pnlForm.add(txtCodSec);
+        pnlForm.add(new JLabel("Cod Curso:")); pnlForm.add(txtCodCurso);
+        pnlForm.add(new JLabel("Cod Estudiante:")); pnlForm.add(txtCodEst);
+
+        pnlForm.setBorder(BorderFactory.createTitledBorder("Parametros"));
+
+        //BTNs PDF
+        JPanel pnlPDF = new JPanel(new GridLayout(5, 1, 5, 5));
+        pnlPDF.setBorder(BorderFactory.createTitledBorder("Reportes PDF"));
+
+        JButton btnTop5Mejor  = new JButton("Top 5 Mejores (por Seccion)");
+        JButton btnTop5Peor = new JButton("Top 5 Peores (por Seccion)");
+        JButton btnCalSec = new JButton("Calificaciones por Seccion");
+        JButton btnRendSec = new JButton("Rendimiento Secciones (por Curso)");
+        JButton btnIndEst = new JButton("Reporte Individual Estudiante");
+
+        pnlPDF.add(btnTop5Mejor); pnlPDF.add(btnTop5Peor); pnlPDF.add(btnCalSec); pnlPDF.add(btnRendSec);
+        pnlPDF.add(btnIndEst);
+
+        //BTNs CSV
+        JPanel pnlCSV = new JPanel(new GridLayout(4, 1, 5, 5));
+        pnlCSV.setBorder(BorderFactory.createTitledBorder("Exportar CSV"));
+
+        JButton btnCsvInst = new JButton("Exportar Instructores");
+        JButton btnCsvEst = new JButton("Exportar Estudiantes");
+        JButton btnCsvCur = new JButton("Exportar Cursos");
+        JButton btnCsvBit = new JButton("Exportar Bitacora");
+
+        pnlCSV.add(btnCsvInst); pnlCSV.add(btnCsvEst); pnlCSV.add(btnCsvCur); pnlCSV.add(btnCsvBit);
+
+        //Mensaje del resultado
+        JLabel lblMsg = new JLabel("", SwingConstants.CENTER);
+        lblMsg.setFont(new Font("Arial", Font.BOLD, 12));
+
+        //Layout
+        JPanel pnlCentro = new JPanel(new GridLayout(1, 2, 10, 0));
+        pnlCentro.add(pnlPDF); pnlCentro.add(pnlCSV);
+
+        pnl.add(pnlForm, BorderLayout.NORTH); pnl.add(pnlCentro, BorderLayout.CENTER);
+        pnl.add(lblMsg, BorderLayout.SOUTH);
+
+        //Acciones PDF
+        btnTop5Mejor.addActionListener(e -> {
+            String cod = txtCodSec.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de seccion");
+                return;
+            }
+            String res = util.ReportePDF.reporteTop5Mejores(cod);
+            lblMsg.setForeground(res.startsWith("OK") ?
+                    new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnTop5Peor.addActionListener(e -> {
+            String cod = txtCodSec.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de seccion");
+                return;
+            }
+            String res = util.ReportePDF.reporteTop5Peores(cod);
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCalSec.addActionListener(e -> {
+            String cod = txtCodSec.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED);lblMsg.setText("ERROR: Ingrese codigo de seccion");
+                return;
+            }
+            String res = util.ReportePDF.reporteCalificacionesSeccion(cod, admin.getCod());
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnRendSec.addActionListener(e -> {
+            String cod = txtCodCurso.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de curso");
+                return;
+            }
+            String res = util.ReportePDF.reporteSeccionesPorRendimiento(cod);
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnIndEst.addActionListener(e -> {
+            String cod = txtCodEst.getText().trim();
+            if (cod.isEmpty()) {
+                lblMsg.setForeground(Color.RED); lblMsg.setText("ERROR: Ingrese codigo de estudiante");
+                return;
+            }
+            String res = util.ReportePDF.reporteIndividualEstudiante(cod);
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        //Acciones CSV
+        btnCsvInst.addActionListener(e -> {
+            String res = util.ExportadorCSV.exportarInstructores();
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCsvEst.addActionListener(e -> {
+            String res = util.ExportadorCSV.exportarEstudiantes();
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCsvCur.addActionListener(e -> {
+            String res = util.ExportadorCSV.exportarCursos();
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
+
+        btnCsvBit.addActionListener(e -> {
+            String res = util.ExportadorCSV.exportarBitacora();
+            lblMsg.setForeground(res.startsWith("OK") ? new Color(0,130,0) : Color.RED);
+            lblMsg.setText(res);
+        });
         return pnl;
     }
 

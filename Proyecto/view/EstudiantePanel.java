@@ -40,6 +40,9 @@ public class EstudiantePanel extends JFrame {
 
         JButton btnLogout = new JButton("Cerrar Sesion");
         btnLogout.setBackground(new Color(200, 50, 50)); btnLogout.setForeground(Color.WHITE);
+        btnLogout.setFocusPainted(false);
+        btnLogout.setOpaque(true);
+        btnLogout.setBorderPainted(false);
         btnLogout.setFocusPainted(false); btnLogout.addActionListener(e -> cerrarSesion());
 
         JPanel pnlSur = new JPanel(new FlowLayout(FlowLayout.RIGHT)); pnlSur.add(btnLogout);

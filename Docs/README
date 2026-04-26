@@ -1,0 +1,46 @@
+# Proyecto 02 - Sancarlista Academy
+Sistema de gestión académica desarrollado en Java con interfaz gráfica Swing,
+que permite administrar cursos, instructores, estudiantes y calificaciones
+mediante tres roles diferenciados.
+
+## Requisitos
+- Java JRE 11 o superior
+- 2 GB de RAM
+- 50 MB de espacio en el disco duro
+
+## Ejecución
+Doble clic sobre el archivo:
+`Proyecto002.jar`
+
+Asegúrese que la carpeta `data/` esté en la misma ubicación que el JAR.
+
+## Credenciales por defecto
+- Usuario: admin
+- Contraseña: IPC1B
+
+## Roles del sistema
+- Administrador: gestiona instructores, estudiantes, cursos y secciones
+- Instructor: registra y gestiona calificaciones de sus secciones asignadas
+- Estudiante: se inscribe en secciones y consulta sus calificaciones
+
+## Funcionalidades principales
+- CRUD completo de instructores, estudiantes, cursos y secciones
+- Carga masiva desde archivos CSV
+- Registro y consulta de calificaciones con promedio ponderado
+- Generación de reportes en PDF (iText)
+- Exportación de datos en CSV
+- Bitácora de operaciones del sistema
+- Monitor en tiempo real con hilos concurrentes
+- Persistencia de datos mediante serialización Java
+
+## Archivos generados
+- data/ → archivos de persistencia (.ser)
+- reportes/ → PDFs y CSVs exportados
+- data/bitacora.txt → registro de operaciones
+
+## Tecnologías
+- Java 11
+- Swing (interfaz gráfica)
+- iText 5.5.13.3 (generación de PDFs)
+- Maven (gestión del proyecto)
+- Patrón MVC

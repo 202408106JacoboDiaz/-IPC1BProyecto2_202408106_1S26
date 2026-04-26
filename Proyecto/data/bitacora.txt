@@ -1,0 +1,27 @@
+[25/04/2026 19:51:38] | DESCONOCIDO | admin | LOGIN | FALLIDA | Credenciales incorrectas
+[25/04/2026 19:56:42] | ADMINISTRADOR | admin | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 19:56:53] | ADMINISTRADOR | admin | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:09:21] | ADMINISTRADOR | admin | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:17:31] | ADMINISTRADOR | admin | CREAR_ESTUDIANTE | EXITOSA | Estudiante 202408106 creado
+[25/04/2026 20:17:39] | ADMINISTRADOR | admin | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:17:57] | ESTUDIANTE | 202408106 | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:39:38] | ESTUDIANTE | 202408106 | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:42:00] | ESTUDIANTE | 202408106 | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:42:04] | ESTUDIANTE | 202408106 | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:45:04] | ADMINISTRADOR | admin | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:45:28] | ADMINISTRADOR | admin | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:47:13] | ADMINISTRADOR | admin | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:47:25] | ADMINISTRADOR | admin | LOGOUT | EXITOSA | Cierre de sesion
+[25/04/2026 20:47:37] | DESCONOCIDO | admin | LOGIN | FALLIDA | Credenciales incorrectas
+[25/04/2026 20:47:42] | ADMINISTRADOR | admin | LOGIN | EXITOSA | Inicio de sesion exitoso
+[25/04/2026 20:50:42] | ADMINISTRADOR | admin | CREAR_INSTRUCTOR | EXITOSA | Instructor IPC1B000123 creado
+[25/04/2026 20:51:07] | SISTEMA | sistema | EXPORTAR_CSV | EXITOSA | Instructores exportados: reportes/25_04_2026_20_51_07_Instructores.csv
+[25/04/2026 20:55:46] | ADMINISTRADOR | admin | CREAR_INSTRUCTOR | EXITOSA | Instructor IPC1B000456 creado
+[25/04/2026 20:55:54] | ADMINISTRADOR | admin | ACTUALIZAR_INSTRUCTOR | EXITOSA | Instructor IPC1B000123 actualizado
+[25/04/2026 20:56:02] | ADMINISTRADOR | admin | ACTUALIZAR_INSTRUCTOR | EXITOSA | Instructor IPC1B000123 actualizado
+[25/04/2026 20:58:39] | ADMINISTRADOR | admin | CREAR_ESTUDIANTE | EXITOSA | Estudiante 202405536 creado
+[25/04/2026 21:01:48] | ADMINISTRADOR | admin | CREAR_CURSO | EXITOSA | Curso CUR-001 creado
+[25/04/2026 21:03:26] | ADMINISTRADOR | admin | CREAR_CURSO | EXITOSA | Curso CUR-002 creado
+[25/04/2026 21:04:48] | ADMINISTRADOR | admin | CREAR_SECCION | EXITOSA | Seccion SEC-A creada para curso CUR-001, instructor IPC1B000123
+[25/04/2026 21:05:16] | ADMINISTRADOR | admin | CREAR_SECCION | EXITOSA | Seccion SEC-B creada para curso CUR-001, instructor IPC1B000123
+[25/04/2026 21:06:12] | ADMINISTRADOR | admin | LOGOUT | EXITOSA | Cierre de sesion

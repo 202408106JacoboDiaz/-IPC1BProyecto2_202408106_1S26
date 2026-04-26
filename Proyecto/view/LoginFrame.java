@@ -34,7 +34,7 @@ public class LoginFrame extends JFrame {
         //Titulo
         JLabel lblTitulo = new JLabel("SANCARLISTA ACADEMY", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
-        lblTitulo.setForeground(new Color(0, 102, 204));
+        lblTitulo.setForeground(new Color(180, 0, 0));
         gbc.gridx = 0; gbc.gridy = 0;
         gbc.gridwidth = 2;
         pnlMain.add(lblTitulo, gbc);
@@ -71,6 +71,8 @@ public class LoginFrame extends JFrame {
         btnLogin.setBackground(new Color(0, 102, 204));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFocusPainted(false);
+        btnLogin.setOpaque(true);
+        btnLogin.setBorderPainted(false);
 
         pnlBotones.add(btnLogin);
         pnlBotones.add(btnSalir);
